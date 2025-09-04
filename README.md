@@ -1,4 +1,4 @@
-Medi-Com -- Medicos Community
+# Med-Dit: The Medical Community Hub
 
 ## Project Overview
 **Med-Dit** is a modern, interactive community platform designed exclusively for medical professionals and students. It's a space for Medicos to share insights, ask questions, and discuss the latest developments in medicine, all powered by a familiar Reddit-like interface.
@@ -41,14 +41,6 @@ Make sure you have Node.js and npm (or yarn) installed on your machine.
 To run the project locally for development:
 ```bash
 npm run dev
+```
 
-This command will start a local development server. You can view the website in your browser, typically at http://localhost:5173.
 
-Building for Production
-
-To create a production-ready build:
-Bash
-
-npm run build
-
-This will compile the project into the dist/ directory.
