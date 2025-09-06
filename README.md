@@ -29,7 +29,7 @@ Make sure you have Node.js and npm (or yarn) installed on your machine.
 ### Installation
 1.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/your-username/Med-Dit.git](https://github.com/your-username/Med-Dit.git)
+    git clone [https://github.com/Delwinsebi/Med-Dit.git](https://github.com/Delwinsebi/Med-Dit.git)
     cd Med-Dit
     ```
 2.  **Install dependencies:**
