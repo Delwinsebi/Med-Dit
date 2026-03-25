@@ -1,46 +1,82 @@
-# Med-Dit: The Medical Community Hub
+# Med-Dit
 
-## Project Overview
-**Med-Dit** is a modern, interactive community platform designed exclusively for medical professionals and students. It's a space for Medicos to share insights, ask questions, and discuss the latest developments in medicine, all powered by a familiar Reddit-like interface.
+![Vue](https://img.shields.io/badge/Vue-3-42b883)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6)
+![Vite](https://img.shields.io/badge/Vite-7-646cff)
+![Tailwind](https://img.shields.io/badge/Tailwind-3-38bdf8)
 
----
+A modern Reddit-style community app for medical students and professionals to share insights, ask questions, and engage in topic-based discussions.
 
-## Features
-* **Upvote/Downvote System:** Engage with the community by voting on posts to highlight valuable content and discussions.
-* **Create and Share Posts:** Easily share your knowledge or ask for advice with a title and content body.
-* **Dynamic Post Metadata:** Each post displays essential information, including the author, time posted, and a real-time comment count.
-* **Responsive Design:** Access Med-Dit seamlessly on any device, from desktops to mobile phones.
+## Live Demo
 
----
+Add your deployed URL here:
+https://your-demo-link.com
 
-## Technologies Used
-* **Frontend:**
-    * **Vue.js:** The core JavaScript framework for building the user interface.
-    * **TypeScript:** Ensures code quality and predictability.
-    * **CSS:** For styling and design.
+## Preview
 
----
+Add screenshots or GIFs here:
+- Home feed screenshot
+- Submit post page screenshot
 
-## Getting Started
+## Core Features
 
-### Prerequisites
-Make sure you have Node.js and npm (or yarn) installed on your machine.
+- Create and share posts
+- Upvote and downvote interactions
+- Post metadata display (author, time, comments)
+- Responsive UI for desktop and mobile
 
-### Installation
-1.  **Clone the repository:**
-    ```bash
-    git clone [https://github.com/Delwinsebi/Med-Dit.git](https://github.com/Delwinsebi/Med-Dit.git)
-    cd Med-Dit
-    ```
-2.  **Install dependencies:**
-    ```bash
-    npm install
-    ```
+## Tech Stack
 
-### Running the Project
-To run the project locally for development:
-```bash
-npm run dev
-```
+- Vue 3
+- TypeScript
+- Vite
+- Vue Router
+- Pinia
+- Tailwind CSS
+- Axios
+
+## Quick Start
+
+1. Clone:
+   git clone https://github.com/Delwinsebi/Med-Dit.git
+
+2. Enter project:
+   cd Med-Dit
+
+3. Install dependencies:
+   npm install
+
+4. Start development server:
+   npm run dev
+
+## Scripts
+
+- npm run dev: start local dev server
+- npm run build: create production build
+- npm run preview: preview production build locally
+
+## Project Structure
+
+- src/components: reusable UI blocks
+- src/views: page-level views
+- src/router: route setup
+- src/stores: Pinia state
+- src/assets: static assets
+
+## Roadmap
+
+- User authentication
+- Threaded comments
+- Specialty/category tags
+- Search and filtering
+- Moderation tools
+
+## Contributing
+
+Pull requests are welcome. For major changes, open an issue first to discuss what you want to change.
+
+## License
+
+No license specified yet. Consider adding MIT.
 
 
