@@ -12,10 +12,10 @@ interface Post {
 }
 
 export const usePostStore = defineStore('posts', () => {
-  const posts = ref&lt;Post[]&gt;([])
+  const posts = ref<Post[]>([])
   const loading = ref(false)
 
-  const addPost = (post: Omit&lt;Post, 'id' | 'timeAgo' | 'votes' | 'commentCount'&gt;) => {
+  const addPost = (post: Omit<Post, 'id' | 'timeAgo' | 'votes' | 'commentCount'>) => {
     const newPost: Post = {
       ...post,
       id: Date.now(),
