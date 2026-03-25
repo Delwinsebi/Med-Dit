@@ -7,17 +7,6 @@
 
 A modern Reddit-style community app for medical students and professionals to share insights, ask questions, and engage in topic-based discussions.
 
-## Live Demo
-
-Add your deployed URL here:
-https://your-demo-link.com
-
-## Preview
-
-Add screenshots or GIFs here:
-- Home feed screenshot
-- Submit post page screenshot
-
 ## Core Features
 
 - Create and share posts
