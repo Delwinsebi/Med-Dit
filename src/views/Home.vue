@@ -1,29 +1,25 @@
-&lt;template&gt;
-  &lt;div class="max-w-4xl mx-auto px-4 py-8"&gt;
-    &lt;div class="space-y-4"&gt;
-      &lt;Post
-        v-for="post in posts"
+<template>
+  <div class="max-w-4xl mx-auto px-4 py-8">
+    <div class="mb-6">
+      <RouterLink to="/submit" class="inline-block px-4 py-2 bg-blue-600 text-white rounded">
+        Create Post
+      </RouterLink>
+    </div>
+
+    <div class="space-y-4">
+      <Post
+        v-for="post in store.posts"
         :key="post.id"
         v-bind="post"
-      /&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
+      />
+    </div>
+  </div>
+</template>
 
-&lt;script setup lang="ts"&gt;
+<script setup lang="ts">
+import { RouterLink } from 'vue-router'
 import Post from '../components/Post.vue'
-import { ref } from 'vue'
+import { usePostStore } from '../stores/posts'
 
-const posts = ref([
-  {
-    id: 1,
-    title: 'Welcome to Med-Dit!',
-    content: 'This is our first post. Feel free to explore and contribute!',
-    author: 'admin',
-    timeAgo: '1 hour ago',
-    votes: 42,
-    commentCount: 5
-  },
-  // Add more mock posts here
-])
-&lt;/script&gt;
+const store = usePostStore()
+</script>

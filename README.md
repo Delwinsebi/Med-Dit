@@ -52,6 +52,16 @@ A modern Reddit-style community app for medical students and professionals to sh
 - src/stores: Pinia state
 - src/assets: static assets
 
+## Docker Support
+
+The project includes a Dockerfile for containerized deployment.
+
+### Build Docker Image
+
+```bash
+docker build -t med-dit:latest .
+```
+
 ## Roadmap
 
 - User authentication

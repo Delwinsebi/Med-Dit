@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
-interface Post {
+export interface Post {
   id: number
   title: string
   content: string
@@ -12,39 +12,29 @@ interface Post {
 }
 
 export const usePostStore = defineStore('posts', () => {
-  const posts = ref<Post[]>([])
-  const loading = ref(false)
-
-  const addPost = (post: Omit<Post, 'id' | 'timeAgo' | 'votes' | 'commentCount'>) => {
-    const newPost: Post = {
-      ...post,
-      id: Date.now(),
+  const posts = ref<Post[]>([
+    {
+      id: 1,
+      title: 'Welcome to Med-Dit',
+      content: 'First post',
+      author: 'admin',
       timeAgo: 'just now',
       votes: 0,
       commentCount: 0
     }
-    posts.value.unshift(newPost)
+  ])
+
+  const addPost = (input: { title: string; content: string; author?: string }) => {
+    posts.value.unshift({
+      id: Date.now(),
+      title: input.title,
+      content: input.content,
+      author: input.author || 'current_user',
+      timeAgo: 'just now',
+      votes: 0,
+      commentCount: 0
+    })
   }
 
-  const upvotePost = (postId: number) => {
-    const post = posts.value.find(p => p.id === postId)
-    if (post) {
-      post.votes++
-    }
-  }
-
-  const downvotePost = (postId: number) => {
-    const post = posts.value.find(p => p.id === postId)
-    if (post) {
-      post.votes--
-    }
-  }
-
-  return {
-    posts,
-    loading,
-    addPost,
-    upvotePost,
-    downvotePost
-  }
+  return { posts, addPost }
 })
