@@ -5,7 +5,7 @@ export interface PostProps {
   content: string
   author: string
   timeAgo?: string
-  upvotes: number
+  votes: number
   commentCount?: number
 }
 
@@ -15,21 +15,9 @@ defineProps<{
 </script>
 
 <template>
-  <div class="bg-white rounded-lg shadow-md p-6">
-    <div class="flex items-start space-x-4">
-      <div class="flex flex-col items-center">
-        <button class="text-gray-400 hover:text-orange-500">▲</button>
-        <span class="font-semibold">{{ post.upvotes }}</span>
-        <button class="text-gray-400 hover:text-blue-500">▼</button>
-      </div>
-      <div class="flex-1">
-        <h2 class="text-xl font-semibold">{{ post.title }}</h2>
-        <p class="text-gray-600 mt-1 whitespace-pre-line">{{ post.content }}</p>
-        <div class="text-sm text-gray-500 mt-2">
-          Posted by u/{{ post.author }}
-          <span v-if="post.timeAgo"> • {{ post.timeAgo }}</span>
-        </div>
-      </div>
-    </div>
-  </div>
+  <article class="post-card">
+    <div class="post-meta"><span class="community-mark">m</span><span>r/meddit</span><span class="muted">•</span><span class="muted">Posted by u/{{ post.author }} {{ post.timeAgo }}</span><button class="more-button" type="button" aria-label="More post options">•••</button></div>
+    <h2>{{ post.title }}</h2><p class="post-content">{{ post.content }}</p>
+    <div class="post-actions"><div class="vote-control"><button type="button" aria-label="Upvote post">⌃</button><strong>{{ post.votes }}</strong><button type="button" aria-label="Downvote post">⌄</button></div><button type="button" class="post-action">{{ post.commentCount }} <span>comments</span></button><button type="button" class="post-action">Share</button></div>
+  </article>
 </template>
