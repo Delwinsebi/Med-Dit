@@ -8,10 +8,6 @@
 
     <form class="submit-card" @submit.prevent="handleSubmit">
       <label>
-        Subject
-        <input v-model="form.subject" type="text" maxlength="120" required placeholder="What would you like to discuss?" />
-      </label>
-      <label>
         Topics
         <input v-model="form.topics" type="text" maxlength="120" required placeholder="e.g. cardiology, exams, research" />
         <span class="field-help">Separate multiple topics with commas.</span>
