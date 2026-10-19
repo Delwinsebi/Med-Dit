@@ -8,7 +8,7 @@ export interface Post {
   content: string
   author: string
   timeAgo: string
-  votes: number
+  likes: number
   commentCount: number
 }
 
@@ -16,12 +16,12 @@ export const usePostStore = defineStore('posts', () => {
   const posts = ref<Post[]>([
     {
       id: 1,
-      title: 'Welcome to Med-Dit',
+      title: 'Welcome to Meddit',
       topics: 'community, introductions',
       content: 'First post',
       author: 'admin',
       timeAgo: 'just now',
-      votes: 0,
+      likes: 0,
       commentCount: 0
     }
   ])
@@ -34,7 +34,7 @@ export const usePostStore = defineStore('posts', () => {
       content: input.content,
       author: input.author || 'current_user',
       timeAgo: 'just now',
-      votes: 0,
+      likes: 0,
       commentCount: 0
     })
   }

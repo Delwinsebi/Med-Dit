@@ -31,7 +31,7 @@ a { color: inherit; text-decoration: none; }
 .create-link span { font-size: 22px; font-weight: 400; line-height: 0; }
 .icon-button, .avatar { border: 0; background: transparent; }
 .icon-button { color: #555d62; font-size: 18px; }
-.avatar { width: 30px; height: 30px; color: white; background: #2f6f62; font-weight: 700; }
+.avatar { width: 30px; height: 30px; color: white; background: #267bc0; font-weight: 700; }
 
 .feed-page { display: grid; grid-template-columns: 72px minmax(0, 640px) 260px; gap: 28px; justify-content: center; padding: 38px 28px 80px; }
 .rail { display: flex; flex-direction: column; align-items: center; }
@@ -49,16 +49,16 @@ a { color: inherit; text-decoration: none; }
 .post-list { display: grid; gap: 10px; }
 .post-card { padding: 14px 16px 10px; background: var(--card); border: 1px solid var(--line); border-radius: 9px; box-shadow: 0 1px 2px rgba(31,36,40,.03); }
 .post-meta { display: flex; align-items: center; gap: 6px; color: #41494e; font-size: 11px; }
-.community-mark { width: 20px; height: 20px; color: white; background: #7ab52d; font-size: 11px; font-weight: 700; }
+.community-mark { width: 20px; height: 20px; color: white; background: #267bc0; font-size: 11px; font-weight: 700; }
 .muted { color: #899095; }
 .more-button { margin-left: auto; border: 0; color: #737b80; background: transparent; letter-spacing: 2px; }
 .post-card h2 { margin: 12px 0 6px; font: 600 16px 'Space Grotesk', sans-serif; color: #252a2d; }
 .post-content { margin: 0; color: #555d62; font-size: 13px; line-height: 1.55; white-space: pre-line; }
 .post-actions { display: flex; align-items: center; gap: 8px; margin-top: 13px; }
-.vote-control, .post-action { display: inline-flex; align-items: center; border: 1px solid #e0e3e4; border-radius: 18px; background: #f6f7f7; color: #566066; font-size: 12px; }
-.vote-control { gap: 7px; padding: 3px 7px; }
-.vote-control button { padding: 0; border: 0; color: #6d777c; background: transparent; font-size: 16px; line-height: 1; }
-.vote-control strong { color: #3e474c; font-size: 11px; }
+.like-control, .post-action { display: inline-flex; align-items: center; border: 1px solid #e0e3e4; border-radius: 18px; background: #f6f7f7; color: #566066; font-size: 12px; }
+.like-control { gap: 7px; padding: 3px 7px; }
+.like-control button { padding: 0; border: 0; color: #6d777c; background: transparent; font-size: 18px; line-height: 1; }
+.like-control strong { color: #3e474c; font-size: 11px; }
 .post-action { padding: 7px 11px; }
 .post-action:hover, .toolbar-create:hover, .create-link:hover { color: var(--orange); }
 .about-panel { align-self: start; margin-top: 120px; padding: 20px; border-top: 3px solid var(--orange); color: #596166; background: rgba(255,255,255,.5); }
