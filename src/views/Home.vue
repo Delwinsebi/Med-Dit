@@ -19,7 +19,7 @@
     </section>
     <aside class="about-panel">
       <p class="eyebrow">MEDDIT COMMUNITY</p><h2>A calmer place to talk medicine.</h2>
-      <p>Share questions, study wins, and useful clinical knowledge with people who get it.</p>
+      <p>Ask questions, celebrate study breakthroughs, and trade clinical insights with colleagues who speak your language.</p>
       <RouterLink to="/submit" class="primary-action">Create a post</RouterLink>
     </aside>
   </main>
