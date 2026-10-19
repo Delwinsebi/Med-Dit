@@ -5,9 +5,9 @@ import { RouterLink, RouterView } from 'vue-router'
 
 <template>
   <header class="topbar">
-    <RouterLink to="/" class="brand" aria-label="Med-Dit home">
+    <RouterLink to="/" class="brand" aria-label="Meddit home">
       <span class="brand-mark">m</span>
-      <span>meddit</span>
+      <span>Meddit</span>
     </RouterLink>
     <nav class="topbar-actions" aria-label="Primary navigation">
       <RouterLink to="/submit" class="create-link"><span aria-hidden="true">+</span> Create</RouterLink>

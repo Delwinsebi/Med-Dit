@@ -2,13 +2,13 @@
 
 :root {
   font-family: 'DM Sans', sans-serif;
-  color: #1f2428;
-  background: #eef0f2;
+  color: #1c364b;
+  background: #b3bdc7;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  --orange: #ff4500;
-  --ink: #1f2428;
+  --blue: #003cff;
+  --ink: #33658d;
   --muted: #6d7378;
   --line: #d9dcde;
   --card: #ffffff;
