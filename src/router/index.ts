@@ -11,6 +11,11 @@ const routes = [
     path: '/submit',
     name: 'Submit',
     component: () => import('../views/Submit.vue')
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: () => import('../views/Profile.vue')
   }
 ]
 

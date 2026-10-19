@@ -6,7 +6,7 @@
     </aside>
     <section class="feed-shell">
       <div class="feed-heading">
-        <h1>meddit</h1>
+        <h1>Meddit</h1>
         <p>Ask, learn, and share with your medical community.</p>
       </div>
       <label class="search-box"><span aria-hidden="true">⌕</span><input type="search" placeholder="Find anything" aria-label="Search posts" /></label>
@@ -18,7 +18,7 @@
       <div v-if="!store.posts.length" class="empty-state">No posts yet. Start the conversation.</div>
     </section>
     <aside class="about-panel">
-      <p class="eyebrow">MED-DIT COMMUNITY</p><h2>A calmer place to talk medicine.</h2>
+      <p class="eyebrow">MEDDIT COMMUNITY</p><h2>A calmer place to talk medicine.</h2>
       <p>Share questions, study wins, and useful clinical knowledge with people who get it.</p>
       <RouterLink to="/submit" class="primary-action">Create a post</RouterLink>
     </aside>

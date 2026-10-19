@@ -12,7 +12,7 @@ import { RouterLink, RouterView } from 'vue-router'
     <nav class="topbar-actions" aria-label="Primary navigation">
       <RouterLink to="/submit" class="create-link"><span aria-hidden="true">+</span> Create</RouterLink>
       <button class="icon-button" type="button" aria-label="Notifications">o</button>
-      <button class="avatar" type="button" aria-label="Account menu">m</button>
+      <RouterLink to="/profile" class="avatar" aria-label="Open your profile">m</RouterLink>
     </nav>
   </header>
   <RouterView />

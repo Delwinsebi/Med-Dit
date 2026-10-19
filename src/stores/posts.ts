@@ -4,6 +4,7 @@ import { ref } from 'vue'
 export interface Post {
   id: number
   title: string
+  topics: string
   content: string
   author: string
   timeAgo: string
@@ -16,6 +17,7 @@ export const usePostStore = defineStore('posts', () => {
     {
       id: 1,
       title: 'Welcome to Med-Dit',
+      topics: 'community, introductions',
       content: 'First post',
       author: 'admin',
       timeAgo: 'just now',
@@ -24,10 +26,11 @@ export const usePostStore = defineStore('posts', () => {
     }
   ])
 
-  const addPost = (input: { title: string; content: string; author?: string }) => {
+  const addPost = (input: { title: string; topics: string; content: string; author?: string }) => {
     posts.value.unshift({
       id: Date.now(),
       title: input.title,
+      topics: input.topics,
       content: input.content,
       author: input.author || 'current_user',
       timeAgo: 'just now',
