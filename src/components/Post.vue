@@ -1,6 +1,6 @@
 <script setup lang="ts">
 export interface PostProps {
-  id: number
+  id: number | string
   title: string
   content: string
   author: string

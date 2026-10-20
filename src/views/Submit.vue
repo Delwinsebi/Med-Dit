@@ -8,14 +8,15 @@
 
     <form class="submit-card" @submit.prevent="handleSubmit">
       <label>
-        Topics
-        <input v-model="form.topics" type="text" maxlength="120" required placeholder="e.g. cardiology, exams, research" />
+        Topic
+        <input v-model="form.topic" type="text" maxlength="120" required placeholder="e.g. cardiology, exams, research" />
         <span class="field-help">Separate multiple topics with commas.</span>
       </label>
       <label>
         Content
         <textarea v-model="form.content" rows="8" maxlength="5000" required placeholder="Add the details your community needs..." />
       </label>
+      <p v-if="errorMessage" class="form-message form-error" role="alert">{{ errorMessage }}</p>
       <button class="primary-action submit-button" type="submit" :disabled="isSubmitting">
         {{ isSubmitting ? 'Publishing...' : 'Publish post' }}
       </button>
@@ -32,10 +33,21 @@ import { supabase } from '../utils/supabase'
 const router = useRouter()
 const store = usePostStore()
 const isSubmitting = ref(false)
-const form = ref({ subject: '', topics: '', content: '' })
+const errorMessage = ref('')
+const form = ref({ topic: '', content: '' })
 
 async function handleSubmit() {
   isSubmitting.value = true
+  errorMessage.value = ''
+  const topic = form.value.topic.trim()
+  const content = form.value.content.trim()
+
+  if (!topic || !content) {
+    errorMessage.value = 'Topic and content are required.'
+    isSubmitting.value = false
+    return
+  }
+
   const { data } = await supabase.auth.getSession()
   if (!data.session) {
     await router.push({ name: 'Profile' })
@@ -43,13 +55,34 @@ async function handleSubmit() {
     return
   }
 
-  store.addPost({
-    title: form.value.subject.trim(),
-    topics: form.value.topics.trim(),
-    content: form.value.content.trim()
-  })
-  await router.push('/')
-  isSubmitting.value = false
+  try {
+    const { data: profile } = await supabase
+      .from('users')
+      .select('user_name')
+      .eq('id', data.session.user.id)
+      .maybeSingle()
+
+    const userName = profile?.user_name || data.session.user.user_metadata?.username || data.session.user.email || ''
+    if (!userName) {
+      errorMessage.value = 'Set a username in your profile before publishing.'
+      return
+    }
+
+    await store.addPost({
+      topic: topic,
+      content,
+      userName
+    })
+    await router.push('/')
+  } catch (error) {
+    const postgrestError = error as { message?: string; code?: string; details?: string; hint?: string }
+    const details = [postgrestError.message, postgrestError.details, postgrestError.hint]
+      .filter(Boolean)
+      .join(' ')
+    errorMessage.value = details ? `${details}${postgrestError.code ? ` (code: ${postgrestError.code})` : ''}` : 'Unable to publish the post.'
+  } finally {
+    isSubmitting.value = false
+  }
 }
 </script>
 

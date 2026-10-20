@@ -87,6 +87,20 @@ function fillProfile(currentUser: User) {
 	bio.value = currentUser.user_metadata?.bio || ''
 }
 
+async function loadProfile(currentUser: User) {
+	fillProfile(currentUser)
+	const { data } = await supabase.from('users').select('user_name').eq('id', currentUser.id).maybeSingle()
+	if (data?.user_name) username.value = data.user_name
+}
+
+async function saveUsername(currentUser: User) {
+	const { error } = await supabase.from('users').upsert(
+		{ id: currentUser.id, user_name: username.value.trim() },
+		{ onConflict: 'id' }
+	)
+	if (error) throw error
+}
+
 async function submitAuth() {
 	submitting.value = true
 	setMessage('')
@@ -100,7 +114,14 @@ async function submitAuth() {
 
 	if (result.error) setMessage(result.error.message, true)
 	else if (mode.value === 'signup' && !result.data.session) setMessage('Account created. Check your email to confirm your address.')
-	else if (result.data.user) fillProfile(result.data.user)
+	else if (result.data.user) {
+		fillProfile(result.data.user)
+		try {
+			await saveUsername(result.data.user)
+		} catch (error) {
+			setMessage(error instanceof Error ? error.message : 'Unable to save your username.', true)
+		}
+	}
 	submitting.value = false
 }
 
@@ -113,8 +134,13 @@ async function updateProfile() {
 	})
 	if (error) setMessage(error.message, true)
 	else if (data.user) {
-		fillProfile(data.user)
-		setMessage('Profile saved.')
+		try {
+			await saveUsername(data.user)
+			fillProfile(data.user)
+			setMessage('Profile saved.')
+		} catch (saveError) {
+			setMessage(saveError instanceof Error ? saveError.message : 'Unable to save your username.', true)
+		}
 	}
 	submitting.value = false
 }
@@ -131,10 +157,10 @@ async function signOut() {
 
 onMounted(async () => {
 	const { data } = await supabase.auth.getSession()
-	if (data.session?.user) fillProfile(data.session.user)
+	if (data.session?.user) await loadProfile(data.session.user)
 	loading.value = false
 	const authState = supabase.auth.onAuthStateChange((_event, session) => {
-		if (session?.user) fillProfile(session.user)
+		if (session?.user) void loadProfile(session.user)
 		else user.value = null
 	})
 	subscription = authState.data.subscription

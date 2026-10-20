@@ -31,4 +31,6 @@ import Post from '../components/Post.vue'
 import { usePostStore } from '../stores/posts'
 
 const store = usePostStore()
+
+store.fetchPosts()
 </script>
