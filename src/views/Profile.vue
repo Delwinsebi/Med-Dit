@@ -39,7 +39,7 @@
 				<button type="button" :class="{ active: mode === 'signup' }" @click="mode = 'signup'">Create account</button>
 			</div>
 			<h2>{{ mode === 'signin' ? 'Welcome back' : 'Create your account' }}</h2>
-			<p class="auth-description">{{ mode === 'signin' ? 'Continue where you left off in the Meddit community.' : 'A few details and you are ready to participate.' }}</p>
+			<p class="auth-description">{{ mode === 'signin' ? 'Continue where you left off in the Meddit community.' : 'A few details and you are ready to be part of the Meddit community.' }}</p>
 
 			<form class="profile-form" @submit.prevent="submitAuth">
 				<label>Email address<input v-model="email" type="email" autocomplete="email" required placeholder="you@example.com" /></label>

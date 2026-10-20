@@ -27,6 +27,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { usePostStore } from '../stores/posts'
+import { supabase } from '../utils/supabase'
 
 const router = useRouter()
 const store = usePostStore()
@@ -35,6 +36,13 @@ const form = ref({ subject: '', topics: '', content: '' })
 
 async function handleSubmit() {
   isSubmitting.value = true
+  const { data } = await supabase.auth.getSession()
+  if (!data.session) {
+    await router.push({ name: 'Profile' })
+    isSubmitting.value = false
+    return
+  }
+
   store.addPost({
     title: form.value.subject.trim(),
     topics: form.value.topics.trim(),
