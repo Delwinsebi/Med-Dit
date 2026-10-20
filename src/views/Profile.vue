@@ -31,6 +31,19 @@
 					</div>
 				</form>
 			</section>
+
+			<section class="profile-posts">
+				<div class="profile-posts-heading">
+					<div>
+						<p class="eyebrow">YOUR CONTRIBUTIONS</p>
+						<h2>Your posts</h2>
+					</div>
+				</div>
+				<p v-if="postsLoading" class="profile-card profile-loading" aria-live="polite">Loading your posts...</p>
+				<p v-else-if="postsError" class="form-message form-error" role="alert">{{ postsError }}</p>
+				<p v-else-if="!userPosts.length" class="profile-card empty-state">You have not published any posts yet.</p>
+				<div v-else class="post-list"><Post v-for="post in userPosts" :key="post.id" :post="post" /></div>
+			</section>
 		</template>
 
 		<section v-else class="profile-card auth-card">
@@ -59,6 +72,8 @@
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import type { User } from '@supabase/supabase-js'
 import { supabase } from '../utils/supabase'
+import Post from '../components/Post.vue'
+import { usePostStore, type Post as UserPost } from '../stores/posts'
 
 const user = ref<User | null>(null)
 const loading = ref(true)
@@ -71,6 +86,10 @@ const username = ref('')
 const bio = ref('')
 const message = ref('')
 const isError = ref(false)
+const userPosts = ref<UserPost[]>([])
+const postsLoading = ref(false)
+const postsError = ref('')
+const postStore = usePostStore()
 let subscription: { unsubscribe: () => void } | undefined
 
 const initials = computed(() => (displayName.value || user.value?.email || 'm').slice(0, 1).toUpperCase())
@@ -91,6 +110,18 @@ async function loadProfile(currentUser: User) {
 	fillProfile(currentUser)
 	const { data } = await supabase.from('users').select('user_name').eq('id', currentUser.id).maybeSingle()
 	if (data?.user_name) username.value = data.user_name
+	const postAuthor = data?.user_name || username.value || currentUser.email || ''
+	if (postAuthor) {
+		postsLoading.value = true
+		postsError.value = ''
+		try {
+			userPosts.value = await postStore.fetchPostsByUserName(postAuthor)
+		} catch (error) {
+			postsError.value = error instanceof Error ? error.message : 'Unable to load your posts.'
+		} finally {
+			postsLoading.value = false
+		}
+	}
 }
 
 async function saveUsername(currentUser: User) {
@@ -150,6 +181,7 @@ async function signOut() {
 	if (error) setMessage(error.message, true)
 	else {
 		user.value = null
+		userPosts.value = []
 		mode.value = 'signin'
 		setMessage('You have been signed out.')
 	}
