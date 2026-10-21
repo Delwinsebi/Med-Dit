@@ -125,11 +125,21 @@ async function loadProfile(currentUser: User) {
 }
 
 async function saveUsername(currentUser: User) {
-	const { error } = await supabase.from('users').upsert(
-		{ id: currentUser.id, user_name: username.value.trim() },
-		{ onConflict: 'id' }
-	)
-	if (error) throw error
+ const userName = username.value.trim()
+ const { data, error } = await supabase
+  .from('users')
+  .update({ user_name: userName })
+  .eq('id', currentUser.id)
+  .select('id')
+  .maybeSingle()
+
+ if (error) throw error
+ if (!data) {
+  const { error: insertError } = await supabase
+   .from('users')
+   .insert({ id: currentUser.id, user_name: userName })
+  if (insertError) throw insertError
+ }
 }
 
 async function submitAuth() {
@@ -150,7 +160,7 @@ async function submitAuth() {
 		try {
 			await saveUsername(result.data.user)
 		} catch (error) {
-			setMessage(error instanceof Error ? error.message : 'Unable to save your username.', true)
+			setMessage(error instanceof Error ? error.message : 'Username cannot be changed.', true)
 		}
 	}
 	submitting.value = false
@@ -170,7 +180,7 @@ async function updateProfile() {
 			fillProfile(data.user)
 			setMessage('Profile saved.')
 		} catch (saveError) {
-			setMessage(saveError instanceof Error ? saveError.message : 'Unable to save your username.', true)
+			setMessage(saveError instanceof Error ? saveError.message : 'Username cannot be changed.', true)
 		}
 	}
 	submitting.value = false

@@ -2,6 +2,7 @@
 export interface PostProps {
   id: number | string
   title: string
+  topic: string
   content: string
   author: string
   community: string 
@@ -18,7 +19,7 @@ defineProps<{
 <template>
   <article class="post-card">
     <div class="post-meta"><span class="community-mark">M</span><span>r/meddit</span><span class="muted">•</span><span class="muted">Posted by u/{{ post.author }} {{ post.timeAgo }}</span></div>
-    <h2>{{ post.title }}</h2><p class="post-content">{{ post.content }}</p>
+      <h2>{{ post.topic || post.title }}</h2><p class="post-content">{{ post.content }}</p>
     <div class="post-actions"><div class="like-control"><button type="button" aria-label="Like post">♡</button><strong>{{ post.likes }}</strong></div><button type="button" class="post-action">{{ post.commentCount }} <span> comments</span></button><button type="button" class="post-action">Share</button></div>
   </article>
 </template>
