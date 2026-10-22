@@ -106,9 +106,25 @@ function fillProfile(currentUser: User) {
 	bio.value = currentUser.user_metadata?.bio || ''
 }
 
+function clearProfile() {
+	user.value = null
+	userPosts.value = []
+	mode.value = 'signin'
+}
+
 async function loadProfile(currentUser: User) {
 	fillProfile(currentUser)
-	const { data } = await supabase.from('users').select('user_name').eq('id', currentUser.id).maybeSingle()
+	const { data, error } = await supabase.from('users').select('user_name').eq('id', currentUser.id).maybeSingle()
+	if (error) {
+		postsError.value = error.message
+		return
+	}
+	if (!data) {
+		const { error: signOutError } = await supabase.auth.signOut()
+		clearProfile()
+		if (signOutError) setMessage(signOutError.message, true)
+		return
+	}
 	if (data?.user_name) username.value = data.user_name
 	const postAuthor = data?.user_name || username.value || currentUser.email || ''
 	if (postAuthor) {
@@ -190,9 +206,7 @@ async function signOut() {
 	const { error } = await supabase.auth.signOut()
 	if (error) setMessage(error.message, true)
 	else {
-		user.value = null
-		userPosts.value = []
-		mode.value = 'signin'
+		clearProfile()
 		setMessage('You have been signed out.')
 	}
 }
