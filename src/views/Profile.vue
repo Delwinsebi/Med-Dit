@@ -120,11 +120,12 @@ async function loadProfile(currentUser: User) {
 		return
 	}
 	if (!data) {
-		const { error: signOutError } = await supabase.auth.signOut()
-		clearProfile()
-		if (signOutError) setMessage(signOutError.message, true)
-		return
-	}
+    console.warn('Profile record not found in public.users. Keeping session active.')
+    // Set a fallback or empty username without logging out:
+    username.value = ''
+    setMessage('Please complete your profile details.')
+    return
+}
 	if (data?.user_name) username.value = data.user_name
 	const postAuthor = data?.user_name || username.value || currentUser.email || ''
 	if (postAuthor) {
@@ -159,27 +160,34 @@ async function saveUsername(currentUser: User) {
 }
 
 async function submitAuth() {
-	submitting.value = true
-	setMessage('')
-	const result = mode.value === 'signin'
-		? await supabase.auth.signInWithPassword({ email: email.value, password: password.value })
-		: await supabase.auth.signUp({
-				email: email.value,
-				password: password.value,
-				options: { data: { display_name: displayName.value.trim(), username: username.value.trim() } }
-			})
+    submitting.value = true
+    setMessage('')
+    const result = mode.value === 'signin'
+        ? await supabase.auth.signInWithPassword({ email: email.value, password: password.value })
+        : await supabase.auth.signUp({
+                email: email.value,
+                password: password.value,
+                options: { data: { display_name: displayName.value.trim(), username: username.value.trim() } }
+            })
 
-	if (result.error) setMessage(result.error.message, true)
-	else if (mode.value === 'signup' && !result.data.session) setMessage('Account created. Check your email to confirm your address.')
-	else if (result.data.user) {
-		fillProfile(result.data.user)
-		try {
-			await saveUsername(result.data.user)
-		} catch (error) {
-			setMessage(error instanceof Error ? error.message : 'Username cannot be changed.', true)
-		}
-	}
-	submitting.value = false
+    if (result.error) {
+        setMessage(result.error.message, true)
+    } else if (mode.value === 'signup' && !result.data.session) {
+        setMessage('Account created. Check your email to confirm your address.')
+    } else if (result.data.user) {
+        fillProfile(result.data.user)
+        
+        // ONLY execute saveUsername during signup!
+        if (mode.value === 'signup') {
+            try {
+                await saveUsername(result.data.user)
+            } catch (error) {
+                console.error('saveUsername error:', error)
+                setMessage(error instanceof Error ? error.message : 'Failed to save username.', true)
+            }
+        }
+    }
+    submitting.value = false
 }
 
 async function updateProfile() {
