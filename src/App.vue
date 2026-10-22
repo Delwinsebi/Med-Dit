@@ -12,6 +12,7 @@
 
   const todos = ref<Todo[]>([])
   const user = ref<User | null>(null)
+  const isDarkMode = ref(false)
   let subscription: { unsubscribe: () => void } | undefined
 
   const profileInitial = computed(() => {
@@ -19,12 +20,24 @@
     return name.slice(0, 1).toUpperCase()
   })
 
+  function applyTheme(dark: boolean) {
+    isDarkMode.value = dark
+    document.documentElement.dataset.theme = dark ? 'dark' : 'light'
+    localStorage.setItem('meddit-theme', dark ? 'dark' : 'light')
+  }
+
+  function toggleTheme() {
+    applyTheme(!isDarkMode.value)
+  }
+
   async function getTodos() {
     const { data } = await supabase.from('todos').select()
     todos.value = data || []
   }
 
   onMounted(async () => {
+    const savedTheme = localStorage.getItem('meddit-theme')
+    applyTheme(savedTheme ? savedTheme === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches)
     getTodos()
     const { data } = await supabase.auth.getSession()
     user.value = data.session?.user || null
@@ -48,6 +61,9 @@
     </RouterLink>
     <nav class="topbar-actions" aria-label="Primary navigation">
       <RouterLink to="/submit" class="create-link"><span aria-hidden="true">+</span> Create</RouterLink>
+      <button class="theme-toggle" type="button" :aria-pressed="isDarkMode" :aria-label="isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'" :title="isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'" @click="toggleTheme">
+        <span aria-hidden="true">{{ isDarkMode ? '☀' : '☾' }}</span>
+      </button>
       <RouterLink to="/profile" class="avatar" aria-label="Open your profile">{{ profileInitial }}</RouterLink>
     </nav>
   </header>
