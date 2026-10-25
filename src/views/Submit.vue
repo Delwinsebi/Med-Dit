@@ -92,8 +92,8 @@ async function handleSubmit() {
 .submit-heading h1 { margin: 7px 0 8px; color: var(--ink); font: 700 38px 'Space Grotesk', sans-serif; letter-spacing: -1px; }
 .submit-heading > p:last-child { max-width: 480px; margin: 0; color: var(--muted); font-size: 14px; }
 .submit-card { display: grid; gap: 19px; padding: 28px; background: var(--card); border: 1px solid var(--line); border-radius: 9px; box-shadow: 0 5px 18px rgba(31,36,40,.04); }
-.submit-card label { display: grid; gap: 7px; color: #42484d; font-size: 12px; font-weight: 700; }
-.submit-card input, .submit-card textarea { width: 100%; padding: 11px 12px; border: 1px solid #d4d8da; border-radius: 5px; outline: 0; color: var(--ink); background: #fbfbfb; font: inherit; font-size: 13px; resize: vertical; }
+.submit-card label { display: grid; gap: 7px; color: var(--secondary-text); font-size: 12px; font-weight: 700; }
+.submit-card input, .submit-card textarea { width: 100%; padding: 11px 12px; border: 1px solid var(--line); border-radius: 5px; outline: 0; color: var(--text); background: var(--surface); font: inherit; font-size: 13px; resize: vertical; }
 .submit-card input:focus, .submit-card textarea:focus { border-color: var(--orange); box-shadow: 0 0 0 2px rgba(38,123,192,.12); }
 .field-help { color: var(--muted); font-size: 11px; font-weight: 400; }
 .submit-button { width: fit-content; margin-top: 2px; border: 0; cursor: pointer; }
