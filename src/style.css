@@ -78,7 +78,7 @@ a { color: inherit; text-decoration: none; }
 .like-control { gap: 7px; padding: 3px 7px; }
 .like-control button { padding: 0; border: 0; color: #6d777c; background: transparent; font-size: 18px; line-height: 1; }
 .like-control strong { color: #3e474c; font-size: 11px; }
-.post-action { padding: 7px 11px; }
+.post-action { gap: 5px; padding: 7px 11px; }
 .post-action:hover, .toolbar-create:hover, .create-link:hover { color: var(--orange); }
 .about-panel { align-self: start; margin-top: 120px; padding: 20px; border-top: 3px solid var(--orange); color: var(--secondary-text); background: var(--surface); }
 .about-panel h2 { margin: 8px 0; color: var(--ink); font: 600 22px 'Space Grotesk', sans-serif; }

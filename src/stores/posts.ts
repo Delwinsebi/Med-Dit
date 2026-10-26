@@ -182,11 +182,23 @@ export const usePostStore = defineStore('posts', () => {
       content: content.trim()
     })
     if (insertError) throw insertError
+    const post = posts.value.find((item) => item.id === postId)
+    if (post) post.commentCount += 1
   }
 
   async function deleteComment(commentId: string) {
+    const { data: comment, error: lookupError } = await supabase
+      .from('comments')
+      .select('post_id')
+      .eq('id', commentId)
+      .maybeSingle()
+    if (lookupError) throw lookupError
+
     const { error: deleteError } = await supabase.from('comments').delete().eq('id', commentId)
     if (deleteError) throw deleteError
+
+    const post = posts.value.find((item) => item.id === String(comment?.post_id))
+    if (post) post.commentCount = Math.max(0, post.commentCount - 1)
   }
 
   return { posts, loading, error, fetchPosts, fetchPostsByUserName, addPost, vote, fetchComments, addComment, deleteComment }

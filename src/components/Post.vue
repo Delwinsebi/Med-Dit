@@ -78,6 +78,7 @@ async function handleComment() {
     commentText.value = ''
     commentsOpen.value = true
     await loadComments()
+    props.post.commentCount = comments.value.length
   } catch (error) {
     interactionError.value = error instanceof Error ? error.message : 'Unable to publish your comment.'
   } finally {
@@ -89,6 +90,7 @@ async function handleDeleteComment(commentId: string) {
   try {
     await store.deleteComment(commentId)
     comments.value = comments.value.filter((comment) => comment.id !== commentId)
+    props.post.commentCount = comments.value.length
   } catch (error) {
     interactionError.value = error instanceof Error ? error.message : 'Unable to delete your comment.'
   }
@@ -116,7 +118,10 @@ onMounted(async () => {
         <button type="button" :class="{ active: post.currentVote === 'down' }" :disabled="voting" aria-label="Downvote post" @click="handleVote('down')">↓</button>
         <strong>{{ post.downvotes }}</strong>
       </div>
-      <button type="button" class="post-action" @click="commentsOpen = !commentsOpen">{{ post.commentCount }} <span> comments</span></button>
+      <button type="button" class="post-action" @click="commentsOpen = !commentsOpen">
+        <strong>{{ post.commentCount }}</strong>
+        <span>{{ post.commentCount === 1 ? 'comment' : 'comments' }}</span>
+      </button>
     </div>
     <p v-if="interactionError" class="form-message form-error" role="alert">{{ interactionError }}</p>
     <section v-if="commentsOpen" class="comments-panel" aria-label="Comments">
