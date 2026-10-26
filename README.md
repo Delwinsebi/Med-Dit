@@ -6,7 +6,7 @@
 
 Med-Dit is a Reddit-inspired discussion platform for medical students, trainees, and healthcare professionals. It is designed as a calmer place to ask questions, share study experiences, discuss clinical topics, and exchange useful resources with people who understand the vocabulary and context of medicine. The application focuses on a simple feed and a small set of purposeful workflows instead of trying to reproduce every feature of a large social network.
 
-The home page is the public discussion feed. Posts are loaded from Supabase in reverse chronological order and presented with their topic, content, author, community label, relative publication time, like count, and comment count. The interface is responsive, so the feed remains usable on a phone as well as a wider desktop display. The search field, like control, comment control, and share control establish the intended interaction model for the community, although their backend behavior is still future work.
+The home page is the public discussion feed. Posts are loaded from Supabase in reverse chronological order and presented with their topic, content, author, community label, relative publication time, upvote count, downvote count, and comment count. The interface is responsive, so the feed remains usable on a phone as well as a wider desktop display. Authenticated users can upvote or downvote a post, switch or remove their vote, and open a flat comment panel to add comments. Comment authors can delete their own comments.
 
 Users can open the profile page to create an account or sign in with an existing Supabase Auth account. After signing in, they can edit their display name and short biography, sign out, and review the posts associated with their username. Creating a post is intentionally restricted to authenticated users. The route guard redirects visitors who are not signed in to the profile page, and the submit form validates the topic and content before inserting a new row into Supabase. Once publishing succeeds, the user is returned to the home feed.
 
@@ -32,17 +32,17 @@ The Supabase client in `src/utils/supabase.ts` reads the project URL and public 
 - `src/views/Home.vue` composes the feed layout, community introduction, search presentation, toolbar, and post list.
 - `src/views/Submit.vue` owns post creation, including trimming and validating form values, checking the current session, finding the user’s username, reporting Supabase errors, and redirecting after a successful insert.
 - `src/views/Profile.vue` owns sign-in, sign-up, profile loading, profile updates, authored-post loading, and sign-out. It keeps authentication state synchronized with Supabase’s auth-state listener.
-- `src/components/Post.vue` is the reusable post-card presentation component. It receives a typed post object rather than querying the database itself.
-- `src/stores/posts.ts` is the central post data layer. It fetches the feed, fetches posts by username, maps database rows into the UI model, formats relative timestamps, and inserts new posts.
+- `src/components/Post.vue` is the reusable post-card presentation component. It renders aggregate upvote/downvote controls and a flat comment panel, while routing authentication-required actions to the profile page.
+- `src/stores/posts.ts` is the central post data layer. It fetches the feed, fetches posts by username, loads interaction counts, maps database rows into the UI model, formats relative timestamps, inserts new posts, and handles vote/comment mutations.
 - `src/utils/supabase.ts` creates the single Supabase client used throughout the application.
 - `src/style.css` defines the color tokens, typography, layout, responsive rules, cards, buttons, form controls, and light/dark theme appearance.
-- `supabase/migrations/` is reserved for versioned database schema changes. The current repository does not yet include a committed migration, so the deployed Supabase schema must be configured separately.
+- `supabase/migrations/20261026090000_add_post_votes_and_comments.sql` creates the normalized `post_votes` and `comments` tables, indexes, and RLS policies. Apply this migration to the Supabase project before using voting or comments.
 
 ## Design Decisions and Scope
 
 The project uses a centralized Pinia store rather than putting database calls directly into every component. This keeps row mapping and timestamp formatting consistent and makes it easier to add caching, pagination, or real-time subscriptions later. Supabase Auth was chosen because it provides session management without requiring a separate authentication server, while the public `users` table gives the application a stable place for profile information that is useful to posts.
 
-The visual design deliberately uses a restrained editorial layout: a narrow reading column, generous spacing, clear form hierarchy, and an optional dark theme. This supports scanning and long-form discussion better than a dashboard crowded with controls. The app currently prioritizes the complete browse, account, profile, and publish paths. Likes, comments, search, moderation, specialty tags, and richer community navigation are visible future extensions rather than falsely simulated functionality.
+The visual design deliberately uses a restrained editorial layout: a narrow reading column, generous spacing, clear form hierarchy, and an optional dark theme. This supports scanning and long-form discussion better than a dashboard crowded with controls. The app currently prioritizes the complete browse, account, profile, publish, voting, and commenting paths. Search, moderation, specialty tags, and richer community navigation remain future extensions rather than falsely simulated functionality.
 
 ## Available Commands
 
