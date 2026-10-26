@@ -37,7 +37,6 @@ The Supabase client in `src/utils/supabase.ts` reads the project URL and public 
 - `src/utils/supabase.ts` creates the single Supabase client used throughout the application.
 - `src/style.css` defines the color tokens, typography, layout, responsive rules, cards, buttons, form controls, and light/dark theme appearance.
 - `supabase/migrations/` is reserved for versioned database schema changes. The current repository does not yet include a committed migration, so the deployed Supabase schema must be configured separately.
-- `Dockerfile` and `nginx.conf` support serving the built Vite application from an Nginx container.
 
 ## Design Decisions and Scope
 
@@ -51,7 +50,6 @@ The visual design deliberately uses a restrained editorial layout: a narrow read
 npm run dev       # Start the Vite development server
 npm run build     # Type-check and create the production build
 npm run preview   # Serve the production build locally
-docker build -t med-dit:latest .
 ```
 
 No license has been specified for the project yet.
