@@ -1,6 +1,6 @@
 # Med-Dit
 
-#### Video Demo: <VIDEO_DEMO_URL_HERE>
+#### Video Demo: https://youtu.be/TD0nEMgVAto
 
 #### Description:
 
